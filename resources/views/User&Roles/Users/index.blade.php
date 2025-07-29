@@ -194,7 +194,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/user&roles/users',
+                url: '/userroles/users',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -224,7 +224,7 @@
             }).then(_ => {
                 if(_.isConfirmed) {
                     $.ajax({
-                        url: `/user&roles/users/reset/${id}`,
+                        url: `/userroles/users/reset/${id}`,
                         method: 'POST',
                         headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
                         beforeSend: () => $('.preloader').show(),
@@ -246,7 +246,7 @@
 
         function setActive(id) {
             $.ajax({
-                url: `/user&roles/users/active/${id}`,
+                url: `/userroles/users/active/${id}`,
                 method: 'POST',
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
                 beforeSend: () => $('.preloader').show(),
@@ -283,7 +283,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/user&roles/users/update',
+                url: '/userroles/users/update',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},

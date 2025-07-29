@@ -42,6 +42,21 @@
 <link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.common.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.material.orange.light.compact.css') }}" />
 <link rel="stylesheet" href="{{ asset('assets/js/plugin/selectize/selectize.bootstrap5.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/js/plugin/clockpicker/jquery-clockpicker.min.css') }}" />
 
 
+<!--   Core JS Files   -->
+<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
+<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+
+
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 

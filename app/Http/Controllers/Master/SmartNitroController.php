@@ -3,27 +3,34 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shift;
+use App\Models\SmartNitro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ShiftController extends Controller
+class SmartNitroController extends Controller
 {
     public function index()
     {
-        $data = DB::select("select * from shifts");
+        $data = DB::select("
+            select
+                s.*,
+                o.name outlet
+            from smart_nitros s
+            join outlets o on s.outlet_id = o.id
+        ");
 
-        return view('Master.Shift.index', compact('data'));
+        $outlets = DB::select("select * from outlets where active = 1");
+
+        return view('Master.SmartNitro.index', compact('data', 'outlets'));
     }
 
     public function create(Request $request) {
         try {
             DB::beginTransaction();
 
-            Shift::create([
-                'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+            SmartNitro::create([
+                'id' => $request->id_smart_nitro,
+                'outlet_id' => $request->outlet_id
             ]);
 
             if(auth()->user()->level == 1) {
@@ -45,10 +52,10 @@ class ShiftController extends Controller
         try {
             DB::beginTransaction();
 
-            Shift::find($request->id)->update([
-                'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+
+            SmartNitro::find($request->id)->update([
+                'id' => $request->id_smart_nitro,
+                'outlet_id' => $request->outlet_id
             ]);
 
             if(auth()->user()->level == 1) {

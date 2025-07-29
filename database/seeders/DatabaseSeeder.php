@@ -19,8 +19,8 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'username' => 'testuser',
+            'name' => 'Superuser',
+            'username' => 'superuser',
             'email' => 'test@example.com',
             'level' => 1
         ]);
@@ -35,42 +35,54 @@ class DatabaseSeeder extends Seeder
             'name' => 'Owner',
         ]);
 
-        Module::create([
-            'id' => 1,
-            'ordinal' => 2,
-            'parent' => 0,
-            'icon' => 'fas fa-address-book',
-            'name' => 'Accounting',
+        Level::create([
+            'id' => 3,
+            'name' => 'HRD',
+        ]);
+
+        Level::create([
+            'id' => 4,
+            'name' => 'Finance',
+        ]);
+
+        Level::create([
+            'id' => 5,
+            'name' => 'Technician',
+        ]);
+
+        Level::create([
+            'id' => 6,
+            'name' => 'Operator',
         ]);
 
         Module::create([
-           'id' => 2,
-           'ordinal' => 2,
+           'id' => 1,
+           'ordinal' => 99,
            'parent' => 0,
            'icon' => 'fas fa-user',
            'name' => 'User & Roles',
         ]);
 
         Module::create([
-            'id' => 3,
+            'id' => 2,
             'ordinal' => 1,
-            'parent' => 2,
+            'parent' => 1,
             'name' => 'Users',
             'path' => '/user&roles/users'
         ]);
 
         Module::create([
-            'id' => 4,
+            'id' => 3,
             'ordinal' => 2,
-            'parent' => 2,
+            'parent' => 1,
             'name' => 'Levels',
             'path' => '/user&roles/levels'
         ]);
 
         Module::create([
-            'id' => 5,
+            'id' => 4,
             'ordinal' => 3,
-            'parent' => 2,
+            'parent' => 1,
             'name' => 'Modules',
             'path' => '/user&roles/modules'
         ]);

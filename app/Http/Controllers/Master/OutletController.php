@@ -3,28 +3,41 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shift;
+use App\Models\Outlet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ShiftController extends Controller
+class OutletController extends Controller
 {
     public function index()
     {
-        $data = DB::select("select * from shifts");
 
-        return view('Master.Shift.index', compact('data'));
+        $data = DB::select("
+            select
+                o.*,
+                a.name as area_name
+            from outlets o
+            join areas a on a.id = o.area_id
+        ");
+
+        $areas = DB::select("select * from areas where active = 1");
+
+        return view('Master.Outlet.index', compact('data', 'areas'));
     }
 
     public function create(Request $request) {
         try {
             DB::beginTransaction();
 
-            Shift::create([
-                'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+            Outlet::create([
+               'name' => $request->name,
+               'area_id' => $request->area,
+               'description' => $request->description,
+               'latitude' => $request->latitude,
+               'longitude' => $request->longitude,
+               'active' => 1,
             ]);
+
 
             if(auth()->user()->level == 1) {
                 DB::commit();
@@ -45,11 +58,16 @@ class ShiftController extends Controller
         try {
             DB::beginTransaction();
 
-            Shift::find($request->id)->update([
+
+            Outlet::find($request->id)->update([
                 'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+                'area_id' => $request->area,
+                'description' => $request->description,
+                'latitude' => $request->latitude,
+                'longitude' => $request->longitude,
+                'active' => $request->active,
             ]);
+
 
             if(auth()->user()->level == 1) {
                 DB::commit();

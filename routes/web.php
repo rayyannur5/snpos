@@ -2,6 +2,10 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Master\AreaController;
+use App\Http\Controllers\Master\OutletController;
+use App\Http\Controllers\Master\ShiftController;
+use App\Http\Controllers\Master\SmartNitroController;
 use App\Http\Controllers\UserRoles\LevelController;
 use App\Http\Controllers\UserRoles\ModuleController;
 use App\Http\Controllers\UserRoles\UserController;
@@ -18,7 +22,7 @@ Route::middleware('auth')->group(function () {
 
 
     // USER & ROLES
-    Route::controller(UserController::class)->prefix('/user&roles/users')->group(function () {
+    Route::controller(UserController::class)->prefix('/userroles/users')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');
@@ -26,16 +30,41 @@ Route::middleware('auth')->group(function () {
         Route::post('/active/{id}', 'setActive');
     });
 
-    Route::controller(LevelController::class)->prefix('/user&roles/levels')->group(function () {
+    Route::controller(LevelController::class)->prefix('/userroles/levels')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');
     });
 
-    Route::controller(ModuleController::class)->prefix('/user&roles/modules')->group(function () {
+    Route::controller(ModuleController::class)->prefix('/userroles/modules')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');
     });
 
+
+    // MASTER
+    Route::controller(AreaController::class)->prefix('/master/area')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
+    Route::controller(OutletController::class)->prefix('/master/outlet')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
+    Route::controller(SmartNitroController::class)->prefix('/master/smartnitro')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
+    Route::controller(ShiftController::class)->prefix('/master/shift')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
 });

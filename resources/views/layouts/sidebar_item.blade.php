@@ -3,16 +3,18 @@
 @php
     // Mendefinisikan kelas CSS secara dinamis
     $liClass = '';
+
+
     if ($menu->children->isNotEmpty()) {
-        $liClass = ($menu->parent == 0) ? 'nav-item' : 'submenu';
+        $liClass = ($menu->parent == 0) ? "nav-item" : "submenu";
     } elseif ($menu->parent == 0) {
-        $liClass = 'nav-item';
+        $liClass = "nav-item";
     }
 
     $ulClass = ($menu->parent == 0) ? 'nav nav-collapse' : 'nav nav-collapse subnav';
 @endphp
 
-<li class="{{ $liClass }}">
+<li class="{{ $liClass }}" id="{{ substr($menu->path, 1) }}">
 
     @if ($menu->children->isNotEmpty())
         {{-- RENDER SEBAGAI DROPDOWN --}}

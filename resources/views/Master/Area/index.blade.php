@@ -1,15 +1,7 @@
 @php
-    $title = 'Shift'
+    $title = 'Area'
 @endphp
 @extends('layouts.main')
-
-@section('css')
-    <style>
-        .clockpicker-popover {
-            z-index: 9999 !important;
-        }
-    </style>
-@endsection
 
 @section('header')
     <div class="d-flex justify-content-between align-items-center">
@@ -37,7 +29,7 @@
 
         </div>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addShiftModal"><i class="fas fa-plus"></i> Tambah Shift</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addAreaModal"><i class="fas fa-plus"></i> Tambah Area</button>
     </div>
 @endsection
 
@@ -49,32 +41,18 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="addShiftModal" tabindex="-1" aria-labelledby="addShiftModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addAreaModal" tabindex="-1" aria-labelledby="addAreaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form onsubmit="add()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addShiftModalLabel">Tambah Shift</h1>
+                        <h1 class="modal-title fs-5" id="addAreaModalLabel">Tambah Area</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Shift</label>
+                            <label for="" class="form-label">Nama Area</label>
                             <input type="text" name="name" class="form-control" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Mulai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="start_time" class="form-control" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Selesai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="end_time" class="form-control" autocomplete="off" required>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -91,28 +69,22 @@
             <div class="modal-content">
                 <form onsubmit="update()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Shift</h1>
+                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Area</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="edit_id">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Shift</label>
+                            <label for="" class="form-label">Nama Area</label>
                             <input type="text" name="name" id="edit_name" class="form-control" required>
                         </div>
-
                         <div class="mb-3">
-                            <label for="" class="form-label">Mulai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="start_time" id="edit_start_time" class="form-control" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Selesai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="end_time" id="edit_end_time" class="form-control" autocomplete="off" required>
-                            </div>
+                            <label for="" class="form-label">Status</label>
+                            <select name="active" id="edit_active" class="form-select">
+                                <option value="" selected disabled>Pilih Status</option>
+                                <option value="1">Active</option>
+                                <option value="0">Non Active</option>
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -132,9 +104,6 @@
     <script>
 
         $(document).ready(function() {
-
-            $('.clockpicker').clockpicker();
-
             const data = @json($data);
 
             $('#dataGrid').dxDataGrid({
@@ -157,10 +126,19 @@
                 },
                 columns: [
                     {dataField: 'name'},
-                    {dataField: 'start_time'},
-                    {dataField: 'end_time'},
                     {dataField: 'created_at'},
                     {dataField: 'updated_at'},
+                    {
+                        dataField: 'active',
+                        dataType: 'string',
+                        cellTemplate: function (container, options) {
+                            if(options.value == 1) {
+                                $(container).html(`<div class="px-2 py-1 bg-success-subtle rounded-pill" style="width: min-content; cursor: pointer">Active</div>`)
+                            } else {
+                                $(container).html(`<div class="px-2 bg-danger-subtle rounded-pill" style="width: min-content; cursor: pointer">Non Active</div>`)
+                            }
+                        }
+                    },
                     {
                         caption: 'Action',
                         cellTemplate: function (container, options) {
@@ -182,7 +160,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/shift',
+                url: '/master/area',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -204,11 +182,12 @@
             })
         }
 
+
+
         function edit(data) {
             $('#edit_id').val(data.id)
             $('#edit_name').val(data.name)
-            $('#edit_start_time').val(data.start_time)
-            $('#edit_end_time').val(data.end_time)
+            $('#edit_active').val(data.active)
 
             $('#editModal').modal('show')
 
@@ -220,7 +199,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/shift/update',
+                url: '/master/area/update',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},

@@ -1,7 +1,4 @@
-<!--   Core JS Files   -->
-<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+
 
 <!-- jQuery Scrollbar -->
 <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
@@ -34,6 +31,8 @@
 <script src="{{ asset('assets/js/plugin/devextreme/js/dx.all.js') }}"></script>
 
 <script src="{{ asset('assets/js/plugin/selectize/selectize.min.js') }}"></script>
+
+<script src="{{ asset('assets/js/plugin/clockpicker/jquery-clockpicker.min.js') }}"></script>
 
 
 <script>

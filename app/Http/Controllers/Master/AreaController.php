@@ -3,27 +3,28 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shift;
+use App\Models\Area;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ShiftController extends Controller
+class AreaController extends Controller
 {
     public function index()
     {
-        $data = DB::select("select * from shifts");
 
-        return view('Master.Shift.index', compact('data'));
+        $data = DB::select("select * from areas");
+
+        return view('Master.Area.index', compact('data'));
     }
 
     public function create(Request $request) {
         try {
             DB::beginTransaction();
 
-            Shift::create([
+            Area::create([
+                'user_id' => auth()->id(),
                 'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+                'active' => 1
             ]);
 
             if(auth()->user()->level == 1) {
@@ -45,20 +46,19 @@ class ShiftController extends Controller
         try {
             DB::beginTransaction();
 
-            Shift::find($request->id)->update([
+            Area::find($request->id)->update([
                 'name' => $request->name,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
+                'active' => $request->active
             ]);
 
             if(auth()->user()->level == 1) {
                 DB::commit();
             } else {
                 DB::commit();
+                return response()->json([
+                    'message' => 'success'
+                ]);
             }
-            return response()->json([
-                'message' => 'success'
-            ]);
         } catch (\Exception $e) {
             DB::rollBack();
 

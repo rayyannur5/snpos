@@ -278,7 +278,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/user&roles/modules',
+                url: '/userroles/modules',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -323,7 +323,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/user&roles/modules/update',
+                url: '/userroles/modules/update',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},

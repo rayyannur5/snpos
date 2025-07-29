@@ -1,15 +1,7 @@
 @php
-    $title = 'Shift'
+    $title = 'Smart Nitro'
 @endphp
 @extends('layouts.main')
-
-@section('css')
-    <style>
-        .clockpicker-popover {
-            z-index: 9999 !important;
-        }
-    </style>
-@endsection
 
 @section('header')
     <div class="d-flex justify-content-between align-items-center">
@@ -37,7 +29,7 @@
 
         </div>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addShiftModal"><i class="fas fa-plus"></i> Tambah Shift</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSmartNitroModal"><i class="fas fa-plus"></i> Tambah Smart Nitro</button>
     </div>
 @endsection
 
@@ -49,32 +41,27 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="addShiftModal" tabindex="-1" aria-labelledby="addShiftModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addSmartNitroModal" tabindex="-1" aria-labelledby="addSmartNitroModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form onsubmit="add()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addShiftModalLabel">Tambah Shift</h1>
+                        <h1 class="modal-title fs-5" id="addSmartNitroModalLabel">Tambah Smart Nitro</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Shift</label>
-                            <input type="text" name="name" class="form-control" required>
+                            <label for="" class="form-label">ID Smart Nitro</label>
+                            <input type="text" name="id_smart_nitro" class="form-control" required>
                         </div>
-
                         <div class="mb-3">
-                            <label for="" class="form-label">Mulai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="start_time" class="form-control" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Selesai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="end_time" class="form-control" autocomplete="off" required>
-                            </div>
+                            <label for="" class="form-label">Outlet</label>
+                            <select name="outlet_id" id="add_outlet">
+                                <option value="" selected disabled>Pilih Outlet</option>
+                                @foreach($outlets as $o)
+                                    <option value="{{ $o->id }}">{{ $o->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -86,33 +73,28 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editOutletModal" tabindex="-1" aria-labelledby="editOutletModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form onsubmit="update()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Shift</h1>
+                        <h1 class="modal-title fs-5" id="editOutletModalLabel">Tambah Smart Nitro</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="edit_id">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Shift</label>
-                            <input type="text" name="name" id="edit_name" class="form-control" required>
+                            <label for="" class="form-label">ID Smart Nitro</label>
+                            <input type="text" name="id_smart_nitro" id="edit_id_smart_nitro" class="form-control" required>
                         </div>
-
                         <div class="mb-3">
-                            <label for="" class="form-label">Mulai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="start_time" id="edit_start_time" class="form-control" autocomplete="off" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="" class="form-label">Selesai Shift</label>
-                            <div class="mb-3 input-group clockpicker" data-autoclose="true">
-                                <input type="text" name="end_time" id="edit_end_time" class="form-control" autocomplete="off" required>
-                            </div>
+                            <label for="" class="form-label">Outlet</label>
+                            <select name="outlet_id" id="edit_outlet">
+                                <option value="" selected disabled>Pilih Outlet</option>
+                                @foreach($outlets as $o)
+                                    <option value="{{ $o->id }}">{{ $o->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -133,7 +115,8 @@
 
         $(document).ready(function() {
 
-            $('.clockpicker').clockpicker();
+            $('#add_outlet').selectize()
+            $('#edit_outlet').selectize()
 
             const data = @json($data);
 
@@ -156,9 +139,8 @@
                     visible: true
                 },
                 columns: [
-                    {dataField: 'name'},
-                    {dataField: 'start_time'},
-                    {dataField: 'end_time'},
+                    {dataField: 'id'},
+                    {dataField: 'outlet'},
                     {dataField: 'created_at'},
                     {dataField: 'updated_at'},
                     {
@@ -182,7 +164,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/shift',
+                url: '/master/smartnitro',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -204,13 +186,14 @@
             })
         }
 
+
+
         function edit(data) {
             $('#edit_id').val(data.id)
-            $('#edit_name').val(data.name)
-            $('#edit_start_time').val(data.start_time)
-            $('#edit_end_time').val(data.end_time)
+            $('#edit_id_smart_nitro').val(data.id)
+            $('#edit_outlet').selectize()[0].selectize.setValue(data.outlet_id)
 
-            $('#editModal').modal('show')
+            $('#editOutletModal').modal('show')
 
         }
 
@@ -220,7 +203,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/shift/update',
+                url: '/master/smartnitro/update',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
