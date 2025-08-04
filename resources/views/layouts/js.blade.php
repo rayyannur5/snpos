@@ -28,6 +28,7 @@
 <!-- Kaiadmin JS -->
 <script src="{{ asset('assets/js/kaiadmin.js') }}"></script>
 
+<script src="{{ asset('assets/js/plugin/devextreme/js/jszip.min.js') }}"></script>
 <script src="{{ asset('assets/js/plugin/devextreme/js/dx.all.js') }}"></script>
 
 <script src="{{ asset('assets/js/plugin/selectize/selectize.min.js') }}"></script>

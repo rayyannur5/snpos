@@ -6,6 +6,7 @@ use App\Http\Controllers\Master\AreaController;
 use App\Http\Controllers\Master\OutletController;
 use App\Http\Controllers\Master\ShiftController;
 use App\Http\Controllers\Master\SmartNitroController;
+use App\Http\Controllers\Schedule\ScheduleController;
 use App\Http\Controllers\UserRoles\LevelController;
 use App\Http\Controllers\UserRoles\ModuleController;
 use App\Http\Controllers\UserRoles\UserController;
@@ -66,5 +67,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');
+    });
+
+    // SCHEDULE
+    Route::controller(ScheduleController::class)->prefix('/schedule')->group(function () {
+        Route::get('/', 'index');
+        Route::get('/getSchedule', 'getSchedule');
+        Route::get('/create', 'create');
+        Route::get('/createCanvasSchedule', 'createCanvasSchedule');
+        Route::post('/update', 'update');
+        Route::post('/importSchedule', 'importSchedule');
+        Route::post('/saveSchedule', 'saveSchedule');
     });
 });
