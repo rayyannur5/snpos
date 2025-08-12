@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'ordinal' => 1,
             'parent' => 1,
             'name' => 'Users',
-            'path' => '/user&roles/users'
+            'path' => '/userroles/users'
         ]);
 
         Module::create([
@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
             'ordinal' => 2,
             'parent' => 1,
             'name' => 'Levels',
-            'path' => '/user&roles/levels'
+            'path' => '/userroles/levels'
         ]);
 
         Module::create([
@@ -84,7 +84,7 @@ class DatabaseSeeder extends Seeder
             'ordinal' => 3,
             'parent' => 1,
             'name' => 'Modules',
-            'path' => '/user&roles/modules'
+            'path' => '/userroles/modules'
         ]);
 
     }

@@ -215,7 +215,11 @@
                                 edit(options.data)
                             })
 
-                            $(container).append(button)
+                            const detail = $(`<a href="/master/outlet/${options.data.id}" class="btn btn-dark btn-sm rounded-pill"><i class="fa fa-eye"></i> Detail</a>`)
+
+                            const mainContainer = $('<div class="d-flex gap-2">').append(button).append(detail)
+
+                            $(container).append(mainContainer)
 
                         }
                     }

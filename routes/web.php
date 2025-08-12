@@ -4,6 +4,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Master\AreaController;
 use App\Http\Controllers\Master\OutletController;
+use App\Http\Controllers\Master\PaymentController;
+use App\Http\Controllers\Master\ProductController;
 use App\Http\Controllers\Master\ShiftController;
 use App\Http\Controllers\Master\SmartNitroController;
 use App\Http\Controllers\Schedule\ScheduleController;
@@ -55,6 +57,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');
+        Route::get('/{id}', 'show');
+        Route::post('/{id}/addproduct', 'addProduct');
+        Route::post('/{id}/updateproduct', 'updateProduct');
     });
 
     Route::controller(SmartNitroController::class)->prefix('/master/smartnitro')->group(function () {
@@ -64,6 +69,18 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(ShiftController::class)->prefix('/master/shift')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
+    Route::controller(ProductController::class)->prefix('/master/products')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
+    Route::controller(PaymentController::class)->prefix('/master/payments')->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'create');
         Route::post('/update', 'update');

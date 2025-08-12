@@ -1,0 +1,250 @@
+@php
+    $title = 'Payment'
+@endphp
+@extends('layouts.main')
+
+@section('header')
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="page-header">
+            <h3 class="fw-bold mb-3">{{ $title }}</h3>
+            <ul class="breadcrumbs mb-3">
+                <li class="nav-home">
+                    <a href="{{ url('/') }}">
+                        <i class="icon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Master</a>
+                </li>
+                <li class="separator">
+                    <i class="icon-arrow-right"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">{{ $title }}</a>
+                </li>
+            </ul>
+
+        </div>
+
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPaymentModal"><i class="fas fa-plus"></i> Tambah Payment</button>
+    </div>
+@endsection
+
+@section('container')
+    <div class="card" style="min-height: 60vh">
+        <div class="card-body">
+            <div id="dataGrid"></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form onsubmit="add()">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="addPaymentModalLabel">Tambah Payment</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nama Payment</label>
+                            <input type="text" name="name" class="form-control" required>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <label class="form-control" style="width: min-content">
+                                <input type="checkbox" name="is_fully_paid" checked class="form-check-input">
+                            </label>
+                            <span class="input-group-text flex-grow-1" id="basic-addon2">Langsung Full</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <label class="form-control" style="width: min-content">
+                                <input type="checkbox" name="is_need_picture" checked class="form-check-input">
+                            </label>
+                            <span class="input-group-text flex-grow-1" id="basic-addon2">Wajib Gambar</span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form onsubmit="update()">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Payment</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" id="edit_id">
+                        <div class="mb-3">
+                            <label for="" class="form-label">Nama Payment</label>
+                            <input type="text" name="name" id="edit_name" class="form-control" required>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <label class="form-control" style="width: min-content">
+                                <input type="checkbox" name="is_fully_paid" id="edit_is_fully_paid" class="form-check-input">
+                            </label>
+                            <span class="input-group-text flex-grow-1" id="basic-addon2">Langsung Full</span>
+                        </div>
+                        <div class="d-flex mb-3">
+                            <label class="form-control" style="width: min-content">
+                                <input type="checkbox" name="is_need_picture" id="edit_is_need_picture" class="form-check-input">
+                            </label>
+                            <span class="input-group-text flex-grow-1" id="basic-addon2">Wajib Gambar</span>
+                        </div>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Status</label>
+                            <select name="active" id="edit_active" class="form-select">
+                                <option value="1">Aktif</option>
+                                <option value="0">Tidak Aktif</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+@endsection
+
+
+@section('script')
+
+    <script>
+
+        $(document).ready(function() {
+            const data = @json($data);
+
+            $('#dataGrid').dxDataGrid({
+                dataSource: data,
+                columnHidingEnabled: true,
+                columnAutoWidth: true,
+                rowAlternationEnabled: true,
+                filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                searchPanel: {
+                    visible: true
+                },
+                grouping: {
+                    autoExpandAll: true
+                },
+                groupPanel: {
+                    visible: true
+                },
+                columns: [
+                    {dataField: 'name'},
+                    {dataField: 'is_need_picture', dataType: 'boolean'},
+                    {dataField: 'is_fully_paid', dataType: 'boolean'},
+                    {
+                        dataField: 'active',
+                        dataType: 'string',
+                        cellTemplate: function (container, options) {
+                            if(options.value == 1) {
+                                $(container).html(`<div class="px-2 py-1 bg-success-subtle rounded-pill" style="width: min-content; cursor: pointer">Active</div>`)
+                            } else {
+                                $(container).html(`<div class="px-2 bg-danger-subtle rounded-pill" style="width: min-content; cursor: pointer">Non Active</div>`)
+                            }
+                        }
+                    },
+                    {
+                        caption: 'Action',
+                        cellTemplate: function (container, options) {
+                            const button = $('<button>').addClass('btn btn-primary btn-sm rounded-pill').html(`<i class="fas fa-pen"></i>`).on('click', function() {
+                                edit(options.data)
+                            })
+
+                            $(container).append(button)
+
+                        }
+                    }
+                ]
+            })
+        })
+
+        function add() {
+            event.preventDefault()
+
+            const data = $(event.target).serializeArray()
+
+            $.ajax({
+                url: '/master/payments',
+                method: 'POST',
+                data: data,
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                beforeSend: () => $('.preloader').show(),
+                complete: () => $('.preloader').fadeOut(),
+                success: data => {
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Data saved!!',
+                        showConfirmButton: false
+                    }).then(_ => {
+                        location.reload()
+                    })
+                },
+                error: err => Swal.fire({
+                    icon: 'error',
+                    html: err['responseJSON'] ? err.responseJSON.message : err.responseText
+                })
+            })
+        }
+
+
+
+        function edit(data) {
+            $('#edit_id').val(data.id)
+            $('#edit_name').val(data.name)
+            $('#edit_is_need_picture').prop('checked', data.is_need_picture)
+            $('#edit_is_fully_paid').prop('checked', data.is_fully_paid)
+            $('#edit_active').prop('checked', data.active)
+
+            $('#editModal').modal('show')
+
+        }
+
+        function update() {
+            event.preventDefault()
+
+            const data = $(event.target).serializeArray()
+
+            $.ajax({
+                url: '/master/payments/update',
+                method: 'POST',
+                data: data,
+                headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+                beforeSend: () => $('.preloader').show(),
+                complete: () => $('.preloader').fadeOut(),
+                success: data => {
+                    Swal.fire({
+                        icon: 'success',
+                        text: 'Data saved!!'
+                    }).then(_ => {
+                        location.reload()
+                    })
+                },
+                error: err => Swal.fire({
+                    icon: 'error',
+                    html: err['responseJSON'] ? err.responseJSON.message : err.responseText
+                })
+            })
+        }
+
+    </script>
+@endsection
+

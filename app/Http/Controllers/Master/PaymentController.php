@@ -3,27 +3,29 @@
 namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ProductController extends Controller
+class PaymentController extends Controller
 {
     public function index()
     {
-        $data = DB::select("select * from products");
-        return view('Master.Produk.index', compact('data'));
+
+        $data = Payment::all();
+
+        return view('Master.Payment.index', compact('data'));
     }
 
     public function create(Request $request) {
         try {
             DB::beginTransaction();
 
-            Product::create([
+            Payment::create([
                 'name' => $request->name,
-                'active' => 1,
-                'default_price' => $request->default_price,
-                'mandatory' => isset($request->mandatory) ? 1 : 0,
+                'is_fully_paid' => isset($request->is_fully_paid) ? 1 : 0,
+                'is_need_picture' => isset($request->is_need_picture) ? 1 : 0,
+                'active' => 1
             ]);
 
             if(auth()->user()->level == 1) {
@@ -44,11 +46,11 @@ class ProductController extends Controller
         try {
             DB::beginTransaction();
 
-            Product::find($request->id)->update([
+            Payment::find($request->id)->update([
                 'name' => $request->name,
-                'active' => $request->active,
-                'default_price' => $request->default_price,
-                'mandatory' => isset($request->mandatory) ? 1 : 0,
+                'is_fully_paid' => isset($request->is_fully_paid) ? 1 : 0,
+                'is_need_picture' => isset($request->is_need_picture) ? 1 : 0,
+                'active' => $request->active
             ]);
 
             if(auth()->user()->level == 1) {

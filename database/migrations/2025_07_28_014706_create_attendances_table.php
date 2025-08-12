@@ -19,10 +19,14 @@ return new class extends Migration
             $table->timestamp('check_out_time')->nullable();
             $table->string('check_in_picture')->nullable();
             $table->string('check_out_picture')->nullable();
-            $table->double('latitude')->nullable();
-            $table->double('longitude')->nullable();
+            $table->double('check_in_latitude')->nullable();
+            $table->double('check_out_latitude')->nullable();
+            $table->double('check_in_longitude')->nullable();
+            $table->double('check_out_longitude')->nullable();
             $table->double('kwh_start')->nullable();
             $table->double('kwh_end')->nullable();
+            $table->text('check_in_location')->nullable();
+            $table->text('check_out_location')->nullable();
             $table->timestamps();
         });
     }
