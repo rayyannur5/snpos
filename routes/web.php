@@ -8,6 +8,7 @@ use App\Http\Controllers\Master\PaymentController;
 use App\Http\Controllers\Master\ProductController;
 use App\Http\Controllers\Master\ShiftController;
 use App\Http\Controllers\Master\SmartNitroController;
+use App\Http\Controllers\Overtime\OvertimeController;
 use App\Http\Controllers\Schedule\ScheduleController;
 use App\Http\Controllers\UserRoles\LevelController;
 use App\Http\Controllers\UserRoles\ModuleController;
@@ -95,5 +96,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/update', 'update');
         Route::post('/importSchedule', 'importSchedule');
         Route::post('/saveSchedule', 'saveSchedule');
+    });
+
+    // OVERTIME
+    Route::controller(OvertimeController::class)->prefix('/overtime')->group(function () {
+        Route::get('/approve', 'index');
     });
 });

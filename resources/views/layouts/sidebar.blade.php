@@ -5,7 +5,7 @@
         <div class="logo-header" data-background-color="blue">
             <a href="{{ url('/') }}" class="logo">
                 <img
-                    src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
+                    src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/img/kaiadmin/logo_light.svg"
                     alt="navbar brand"
                     class="navbar-brand"
                     height="20"

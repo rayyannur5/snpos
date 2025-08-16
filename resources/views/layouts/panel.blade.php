@@ -5,7 +5,7 @@
             <div class="logo-header" data-background-color="blue">
                 <a href="{{ url('/') }}" class="logo">
                     <img
-                        src="{{ asset('assets/img/kaiadmin/logo_light.svg') }}"
+                        src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/img/kaiadmin/logo_light.svg"
                         alt="navbar brand"
                         class="navbar-brand"
                         height="20"
@@ -115,7 +115,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="{{ asset('assets/img/profile2.jpg') }}"
+                                                    src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/img/profile.jpg"
                                                     alt="Img Profile"
                                                 />
                                             </div>
@@ -154,7 +154,7 @@
                         >
                             <div class="avatar-sm">
                                 <img
-                                    src="{{ asset('assets/img/profile.jpg') }}"
+                                    src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/img/profile.jpg"
                                     alt="..."
                                     class="avatar-img rounded-circle"
                                 />
@@ -170,7 +170,7 @@
                                     <div class="user-box">
                                         <div class="avatar-lg">
                                             <img
-                                                src="{{ asset('assets/img/profile.jpg') }}"
+                                                src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/img/profile.jpg"
                                                 alt="image profile"
                                                 class="avatar-img rounded"
                                             />

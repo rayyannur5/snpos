@@ -1,4 +1,5 @@
-<script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
+{{--<script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js"></script>
 <script>
     WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -9,7 +10,7 @@
                 "Font Awesome 5 Brands",
                 "simple-line-icons",
             ],
-            urls: ["{{ asset('assets/css/fonts.min.css') }}"],
+            urls: ["https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/css/fonts.min.css"],
         },
         active: function () {
             sessionStorage.fonts = true;
@@ -36,29 +37,39 @@
 </style>
 
 <!-- CSS Files -->
-<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.common.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.material.orange.light.compact.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/js/plugin/selectize/selectize.bootstrap5.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/js/plugin/clockpicker/jquery-clockpicker.min.css') }}" />
+{{--<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />--}}
+{{--<link rel="stylesheet" href="{{ asset('assets/css/plugins.css') }}" />--}}
+{{--<link rel="stylesheet" href="{{ asset('assets/css/kaiadmin.css') }}" />--}}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" />
+{{--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/css/bootstrap.min.css" />--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/css/plugins.min.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/css/kaiadmin.min.css" />
+
+{{--<link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.common.css') }}" />--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devextreme@22.1.6/dist/css/dx.common.min.css" />
+{{--<link rel="stylesheet" href="{{ asset('assets/js/plugin/devextreme/css/dx.material.orange.light.compact.css') }}" />--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devextreme@22.1.6/dist/css/dx.material.blue.light.compact.min.css" />
+{{--<link rel="stylesheet" href="{{ asset('assets/js/plugin/selectize/selectize.bootstrap5.css') }}" />--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@selectize/selectize@0.15.2/dist/css/selectize.bootstrap5.min.css" />
+{{--<link rel="stylesheet" href="{{ asset('assets/js/plugin/clockpicker/jquery-clockpicker.min.css') }}" />--}}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/clockpicker@0.0.7/dist/jquery-clockpicker.min.css" />
 
 
 <!--   Core JS Files   -->
-<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
+{{--<script src="{{ asset('assets/js/core/jquery-3.7.1.min.js') }}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+{{--<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+{{--<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.min.js"></script>
 
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css" rel="stylesheet">
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet-control-geocoder@3.2.1/dist/Control.Geocoder.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/leaflet-control-geocoder@3.2.1/dist/Control.Geocoder.min.css" rel="stylesheet">
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

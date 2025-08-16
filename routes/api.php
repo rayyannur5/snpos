@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\ApiAttendanceController;
 use App\Http\Controllers\api\ApiLoginController;
+use App\Http\Controllers\api\ApiOvertimeController;
 use App\Http\Controllers\api\ApiReportController;
 use App\Http\Controllers\api\ApiScheduleController;
 use App\Http\Controllers\api\ApiTransactionController;
@@ -52,4 +53,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/schedules', 'schedules');
     });
 
+    // OVERTIME APPLICATION
+    Route::controller(ApiOvertimeController::class)->prefix('/overtime')->group(function () {
+        Route::get('/operators-and-shift', 'operators');
+        Route::post('/create', 'create');
+    });
 });
