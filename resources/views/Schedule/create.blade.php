@@ -172,10 +172,23 @@
                         toolbar: {
                             visible: false
                         },
+                        headerFilter: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        height: viewportHeight - 80,
+                        summary: {
+                            groupItems: [
+                                {
+                                    summaryType: 'count'
+                                }
+                            ]
+                        },
                         columns: columns,
                         editing: {
                             mode: "cell", // atau 'cell', 'popup'
-                            allowUpdating: true
+                            allowUpdating: true,
+                            selectTextOnEditStart: true
                         },
                     })
                 },

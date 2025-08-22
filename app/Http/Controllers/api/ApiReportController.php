@@ -143,6 +143,7 @@ class ApiReportController extends Controller
                 select
                     d.amount omset,
                     d.created_at date,
+                    case when d.post_date is not null then 1 else 0 end verified,
                     group_concat(distinct o.name) outlet
                 from deposits d
                 join transactions t on t.deposit_id = d.id
@@ -171,15 +172,24 @@ class ApiReportController extends Controller
 
             $data = DB::select("
                 select
-                    ifnull(sum(sell), 0) tabungan
+                    sum(if(d.id is null, sell, 0)) tabungan,
+                    sum(if(d.id is not null and d.post_date is null, sell, 0)) deposit,
+                    sum(if(d.id is not null and d.post_date is not null, sell, 0)) verified
                 from transactions
-                where user_id = $user->id and deposit_id is null
+                         left join deposits d on d.id = transactions.deposit_id
+                where transactions.user_id = $user->id
             ")[0];
+
+
 
 
             return response()->json([
                 'message' => 'success',
-                'data' => $data
+                'data' => [
+                    'tabungan' => $data->tabungan,
+                    'deposit' => $data->deposit,
+                    'verified' => $data->verified
+                ]
             ]);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -215,6 +225,7 @@ class ApiReportController extends Controller
             return response()->json([
                 'data' => $data
             ]);
+
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(["message" => $e->getMessage(), "trace" => $e->getTrace()], 500);

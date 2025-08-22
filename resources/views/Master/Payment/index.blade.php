@@ -147,6 +147,19 @@
                 groupPanel: {
                     visible: true
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
+                summary: {
+                    groupItems: [
+                        {
+                            summaryType: 'count'
+                        }
+                    ]
+                },
                 columns: [
                     {dataField: 'name'},
                     {dataField: 'is_need_picture', dataType: 'boolean'},

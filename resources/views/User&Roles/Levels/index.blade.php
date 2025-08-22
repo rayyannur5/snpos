@@ -117,6 +117,12 @@
                     visible: true,
                     applyFilter: "auto"
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
                 searchPanel: {
                     visible: true
                 },
@@ -140,8 +146,8 @@
                             }
                         }
                     },
-                    {dataField: 'created_at'},
-                    {dataField: 'updated_at'},
+                    {dataField: 'created_at', dataType: 'datetime', format: "yyyy/MM/dd HH:mm:ss"},
+                    {dataField: 'updated_at', dataType: 'datetime', format: "yyyy/MM/dd HH:mm:ss"},
                     {
                         caption: 'Action',
                         cellTemplate: function (container, options) {

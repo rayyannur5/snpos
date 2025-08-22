@@ -164,6 +164,19 @@
                 groupPanel: {
                     visible: true
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
+                summary: {
+                    groupItems: [
+                        {
+                            summaryType: 'count'
+                        }
+                    ]
+                },
                 columns: [
                     {dataField: 'product_name', caption: 'Nama Produk'},
                     {dataField: 'price', caption: 'Harga'},

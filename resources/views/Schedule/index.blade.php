@@ -57,7 +57,6 @@
                         columnHidingEnabled: true,
                         columnAutoWidth: true,
                         rowAlternationEnabled: true,
-                        paging: false,
                         filterRow: {
                             visible: true,
                             applyFilter: "auto"
@@ -75,8 +74,21 @@
                             enabled: true,
                             fileName: "Jadwal Operator",
                         },
+                        headerFilter: {
+                            visible: true,
+                            applyFilter: "auto"
+                        },
+                        paging: false,
+                        height: viewportHeight - 70,
+                        summary: {
+                            groupItems: [
+                                {
+                                    summaryType: 'count'
+                                }
+                            ]
+                        },
                         columns: [
-                            {dataField: 'date'},
+                            {dataField: 'date', dataType: 'date', format: 'yyyy/MM/dd'},
                             {dataField: 'outlet'},
                             {dataField: 'username'},
                             {dataField: 'shift'},

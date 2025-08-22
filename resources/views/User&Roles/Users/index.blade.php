@@ -133,7 +133,6 @@
         $(document).ready(function() {
             const data = @json($data);
 
-
             // const columns = data.length > 0 ? Object.keys(data[0]).map(item => ({dataField: item})) : []
 
             $('#dataGrid').dxDataGrid({
@@ -154,14 +153,20 @@
                 groupPanel: {
                     visible: true
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
                 columns: [
                     {dataField: 'ID'},
                     {dataField: 'Name'},
                     {dataField: 'Username'},
                     {dataField: 'Email'},
                     {dataField: 'Level'},
-                    {dataField: 'Created'},
-                    {dataField: 'Updated'},
+                    {dataField: 'Created', dataType: 'datetime', format: "yyyy/MM/dd HH:mm:ss"},
+                    {dataField: 'Updated', dataType: 'datetime', format: "yyyy/MM/dd HH:mm:ss"},
                     {
                         dataField: 'Active',
                         dataType: 'string',

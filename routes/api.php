@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\api\ApiAttendanceController;
+use App\Http\Controllers\api\ApiItemRequestController;
 use App\Http\Controllers\api\ApiLoginController;
+use App\Http\Controllers\api\ApiMaintenanceRequestController;
 use App\Http\Controllers\api\ApiOvertimeController;
 use App\Http\Controllers\api\ApiReportController;
 use App\Http\Controllers\api\ApiScheduleController;
@@ -58,4 +60,23 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/operators-and-shift', 'operators');
         Route::post('/create', 'create');
     });
+
+    // MAINTENANCE REQUEST
+    Route::controller(ApiMaintenanceRequestController::class)->prefix('/maintenance')->group(function () {
+        Route::get('/lists', 'lists');
+        Route::get('/items_and_outlets', 'items_and_outlets');
+        Route::post('/create', 'create');
+        Route::post('/assign', 'assign');
+        Route::post('/approve', 'approve');
+    });
+
+    // ITEM REQUEST
+    Route::controller(ApiItemRequestController::class)->prefix('/item_requests')->group(function () {
+        Route::get('/lists', 'lists');
+        Route::get('/items_and_outlets', 'items_and_outlets');
+        Route::post('/create', 'create');
+        Route::post('/assign', 'assign');
+        Route::post('/approve', 'approve');
+    });
+
 });

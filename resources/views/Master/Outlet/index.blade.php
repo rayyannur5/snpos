@@ -189,14 +189,27 @@
                 groupPanel: {
                     visible: true
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
+                summary: {
+                  groupItems: [
+                      {
+                          summaryType: 'count'
+                      }
+                  ]
+                },
                 columns: [
                     {dataField: 'name', caption: 'Nama'},
                     {dataField: 'area_name', caption: 'Area'},
                     {dataField: 'description', caption: 'Deskripsi'},
                     {dataField: 'latitude', caption: 'Lat'},
                     {dataField: 'longitude', caption: 'Long'},
-                    {dataField: 'created_at'},
-                    {dataField: 'updated_at'},
+                    {dataField: 'created_at', dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
+                    {dataField: 'updated_at', dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
                     {
                         dataField: 'active',
                         dataType: 'string',

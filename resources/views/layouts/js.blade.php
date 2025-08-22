@@ -53,7 +53,13 @@
 {{--<script src="{{ asset('assets/js/kaiadmin.js') }}"></script>--}}
 <script src="https://cdn.jsdelivr.net/gh/rayyannur5/snpos_assets@master/web/js/kaiadmin.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.0/dist/fancybox/fancybox.umd.js"></script>
+
+
 <script>
     $('.preloader').hide();
     $('.preloader').removeClass('d-none');
+
+    const viewportHeight = window.innerHeight - 260;
+
 </script>

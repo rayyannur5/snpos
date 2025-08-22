@@ -3,15 +3,12 @@
 @endphp
 @extends('layouts.main')
 
-@section('css')
+@section('header')
     <style>
         .clockpicker-popover {
             z-index: 9999 !important;
         }
     </style>
-@endsection
-
-@section('header')
     <div class="d-flex justify-content-between align-items-center">
         <div class="page-header">
             <h3 class="fw-bold mb-3">{{ $title }}</h3>
@@ -155,12 +152,25 @@
                 groupPanel: {
                     visible: true
                 },
+                headerFilter: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                paging: false,
+                height: viewportHeight,
+                summary: {
+                    groupItems: [
+                        {
+                            summaryType: 'count'
+                        }
+                    ]
+                },
                 columns: [
                     {dataField: 'name'},
                     {dataField: 'start_time'},
                     {dataField: 'end_time'},
-                    {dataField: 'created_at'},
-                    {dataField: 'updated_at'},
+                    {dataField: 'created_at',  dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
+                    {dataField: 'updated_at',  dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
                     {
                         caption: 'Action',
                         cellTemplate: function (container, options) {

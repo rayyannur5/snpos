@@ -1,5 +1,5 @@
 @php
-    $title = 'Produk'
+    $title = 'Barang'
 @endphp
 @extends('layouts.main')
 
@@ -29,7 +29,7 @@
 
         </div>
 
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProductModal"><i class="fas fa-plus"></i> Tambah Produk</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBarangModal"><i class="fas fa-plus"></i> Tambah Barang</button>
     </div>
 @endsection
 
@@ -41,28 +41,29 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addBarangModal" tabindex="-1" aria-labelledby="addBarangModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <form onsubmit="add()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="addProductModalLabel">Tambah Produk</h1>
+                        <h1 class="modal-title fs-5" id="addBarangModalLabel">Tambah Barang</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Produk</label>
+                            <label for="" class="form-label">Nama Barang</label>
                             <input type="text" name="name" class="form-control" required>
                         </div>
-                        <div class="d-flex mb-3">
-                            <label class="form-control" style="width: min-content">
-                                <input type="checkbox" name="mandatory" checked class="form-check-input">
-                            </label>
-                            <span class="input-group-text flex-grow-1" id="basic-addon2">Wajib</span>
+                        <div class="mb-3">
+                            <label for="" class="form-label">Tipe</label>
+                            <select name="type" id="type" class="form-select" required>
+                                <option value="TOOL">Alat</option>
+                                <option value="MATERIAL">Bahan</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Harga Default</label>
-                            <input type="number" name="default_price" class="form-control" required>
+                            <label for="" class="form-label">Deskripsi</label>
+                            <textarea type="text" name="description" rows="3" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -79,32 +80,25 @@
             <div class="modal-content">
                 <form onsubmit="update()">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Produk</h1>
+                        <h1 class="modal-title fs-5" id="editModalLabel">Ubah Barang</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" id="edit_id">
                         <div class="mb-3">
-                            <label for="" class="form-label">Nama Produk</label>
+                            <label for="" class="form-label">Nama Barang</label>
                             <input type="text" name="name" id="edit_name" class="form-control" required>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Harga Default</label>
-                            <input type="number" id="edit_default_price" name="default_price" class="form-control" required>
-                        </div>
-                        <div class="d-flex mb-3">
-                            <label class="form-control" style="width: min-content">
-                                <input type="checkbox" id="edit_mandatory" name="mandatory" class="form-check-input">
-                            </label>
-                            <span class="input-group-text flex-grow-1" id="basic-addon2">Wajib</span>
+                            <label for="" class="form-label">Tipe</label>
+                            <select name="type" id="edit_type" class="form-select" required>
+                                <option value="TOOL">Alat</option>
+                                <option value="MATERIAL">Bahan</option>
+                            </select>
                         </div>
                         <div class="mb-3">
-                            <label for="" class="form-label">Status</label>
-                            <select name="active" id="edit_active" class="form-select">
-                                <option value="" selected disabled>Pilih Status</option>
-                                <option value="1">Active</option>
-                                <option value="0">Non Active</option>
-                            </select>
+                            <label for="" class="form-label">Deskripsi</label>
+                            <textarea type="text" name="description" rows="3" id="edit_description" class="form-control"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -131,7 +125,13 @@
                 columnHidingEnabled: true,
                 columnAutoWidth: true,
                 rowAlternationEnabled: true,
+                paging: false,
+                height: 'auto',
                 filterRow: {
+                    visible: true,
+                    applyFilter: "auto"
+                },
+                headerFilter: {
                     visible: true,
                     applyFilter: "auto"
                 },
@@ -144,36 +144,19 @@
                 groupPanel: {
                     visible: true
                 },
-                headerFilter: {
-                    visible: true,
-                    applyFilter: "auto"
-                },
-                paging: false,
-                height: viewportHeight,
                 summary: {
-                    groupItems: [
-                        {
-                            summaryType: 'count'
-                        }
-                    ]
+                  groupItems: [
+                      {
+                          summaryType: "count"
+                      }
+                  ]
                 },
                 columns: [
-                    {dataField: 'name', caption: 'Nama Produk'},
-                    {dataField: 'default_price', caption: 'Harga Default'},
-                    {dataField: 'mandatory', dataType: 'boolean', caption: 'Wajib Produk'},
-                    {dataField: 'created_at',  dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
-                    {dataField: 'updated_at',  dataType: 'datetime',  format: "yyyy/MM/dd HH:mm:ss"},
-                    {
-                        dataField: 'active',
-                        dataType: 'string',
-                        cellTemplate: function (container, options) {
-                            if(options.value == 1) {
-                                $(container).html(`<div class="px-2 py-1 bg-success-subtle rounded-pill" style="width: min-content; cursor: pointer">Active</div>`)
-                            } else {
-                                $(container).html(`<div class="px-2 bg-danger-subtle rounded-pill" style="width: min-content; cursor: pointer">Non Active</div>`)
-                            }
-                        }
-                    },
+                    {dataField: 'name'},
+                    {dataField: 'description'},
+                    {dataField: 'type'},
+                    {dataField: 'created_at'},
+                    {dataField: 'updated_at'},
                     {
                         caption: 'Action',
                         cellTemplate: function (container, options) {
@@ -182,7 +165,6 @@
                             })
 
                             $(container).append(button)
-
 
                         }
                     }
@@ -196,7 +178,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/products',
+                url: '/master/items',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},
@@ -221,12 +203,10 @@
 
 
         function edit(data) {
-            console.log(data)
             $('#edit_id').val(data.id)
             $('#edit_name').val(data.name)
-            $('#edit_active').val(data.active)
-            $('#edit_default_price').val(data.default_price)
-            $('#edit_mandatory').prop('checked', data.mandatory)
+            $('#edit_description').val(data.description)
+            $('#edit_type').val(data.original_type)
 
             $('#editModal').modal('show')
 
@@ -238,7 +218,7 @@
             const data = $(event.target).serializeArray()
 
             $.ajax({
-                url: '/master/products/update',
+                url: '/master/items/update',
                 method: 'POST',
                 data: data,
                 headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}'},

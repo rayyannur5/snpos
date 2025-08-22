@@ -98,9 +98,7 @@ class ApiAttendanceController extends Controller
             ]);
 
 
-            $extension = $request->file('photo')->getClientOriginalExtension();
-            $timestamp = now()->format('Ymd_His');
-            $fileName = "{$attendance->id}_{$timestamp}.{$extension}";
+            $fileName = $request->file('photo')->getClientOriginalName();
 
             $path = $request->file('photo')->storeAs('attendance_photos', $fileName, 'public');
 

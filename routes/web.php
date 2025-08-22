@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Deposit\DepositController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MaintenanceRequest\MaintenanceRequestController;
 use App\Http\Controllers\Master\AreaController;
+use App\Http\Controllers\Master\MasterItemController;
 use App\Http\Controllers\Master\OutletController;
 use App\Http\Controllers\Master\PaymentController;
 use App\Http\Controllers\Master\ProductController;
@@ -87,6 +90,12 @@ Route::middleware('auth')->group(function () {
         Route::post('/update', 'update');
     });
 
+    Route::controller(MasterItemController::class)->prefix('/master/items')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/', 'create');
+        Route::post('/update', 'update');
+    });
+
     // SCHEDULE
     Route::controller(ScheduleController::class)->prefix('/schedule')->group(function () {
         Route::get('/', 'index');
@@ -100,6 +109,23 @@ Route::middleware('auth')->group(function () {
 
     // OVERTIME
     Route::controller(OvertimeController::class)->prefix('/overtime')->group(function () {
-        Route::get('/approve', 'index');
+        Route::get('/approval', 'index');
+        Route::post('/approval/approve', 'approve');
+        Route::post('/approval/reject', 'reject');
+        Route::get('/information', 'information');
+    });
+
+    // OVERTIME
+    Route::controller(DepositController::class)->prefix('/deposit')->group(function () {
+        Route::get('/receipt', 'index');
+        Route::get('/receipt/{id}', 'detail');
+        Route::post('/receipt/{id}', 'verify');
+        Route::get('/information', 'information');
+    });
+
+    // MAINTENANCE REQUEST
+    Route::controller(MaintenanceRequestController::class)->prefix('/maintenance')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/share', 'share');
     });
 });
