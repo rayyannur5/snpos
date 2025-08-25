@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Deposit\DepositController;
+use App\Http\Controllers\ItemRequest\ItemRequestController;
+use App\Http\Controllers\LeaveRequest\LeaveRequestController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MaintenanceRequest\MaintenanceRequestController;
 use App\Http\Controllers\Master\AreaController;
@@ -127,5 +129,17 @@ Route::middleware('auth')->group(function () {
     Route::controller(MaintenanceRequestController::class)->prefix('/maintenance')->group(function () {
         Route::get('/', 'index');
         Route::post('/share', 'share');
+    });
+
+    // ITEM REQUEST
+    Route::controller(ItemRequestController::class)->prefix('/item_requests')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/update', 'update');
+    });
+
+    // LEAVE REQUEST
+    Route::controller(LeaveRequestController::class)->prefix('/leave')->group(function () {
+        Route::get('/', 'index');
+        Route::post('/update', 'update');
     });
 });

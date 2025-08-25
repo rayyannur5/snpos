@@ -9,9 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class ApiItemRequestController extends Controller
 {
-    public function lists()
+    public function lists(Request $request)
     {
         try {
+
+            $user = $request->user();
 
             $data = DB::select("
                 select
@@ -23,6 +25,7 @@ class ApiItemRequestController extends Controller
                 join users u on u.id = i.request_by
                 join outlets o on o.id = i.outlet_id
                 join master_items m on m.id = i.item_id
+                where request_by = $user->id
             ");
 
             return response()->json([
@@ -69,6 +72,30 @@ class ApiItemRequestController extends Controller
                'note' => $request->note,
                'status' => 'REQUEST',
                'active' => 1
+            ]);
+
+            if(auth()->user()->level == 1) {
+                DB::commit();
+            } else {
+                DB::commit();
+            }
+            return response()->json([
+                'message' => 'success'
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(["message" => $e->getMessage(), "trace" => $e->getTrace()], 500);
+        }
+    }
+
+    public function accept(Request $request) {
+        try {
+            DB::beginTransaction();
+
+            $user = $request->user();
+
+            ItemRequest::find($request->id)->update([
+                'status' => 'ACCEPTED',
             ]);
 
             if(auth()->user()->level == 1) {

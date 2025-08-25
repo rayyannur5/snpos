@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\api\ApiAttendanceController;
 use App\Http\Controllers\api\ApiItemRequestController;
+use App\Http\Controllers\api\ApiLeaveRequestController;
 use App\Http\Controllers\api\ApiLoginController;
 use App\Http\Controllers\api\ApiMaintenanceRequestController;
 use App\Http\Controllers\api\ApiOvertimeController;
@@ -75,8 +76,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/lists', 'lists');
         Route::get('/items_and_outlets', 'items_and_outlets');
         Route::post('/create', 'create');
-        Route::post('/assign', 'assign');
-        Route::post('/approve', 'approve');
+        Route::post('/accept', 'accept');
+    });
+
+    // LEAVE REQUEST
+    Route::controller(ApiLeaveRequestController::class)->prefix('/leave')->group(function () {
+        Route::get('/lists', 'lists');
+        Route::get('/operators', 'operators');
+        Route::post('/create', 'create');
     });
 
 });
